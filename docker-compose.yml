@@ -1,0 +1,36 @@
+version: '3'
+services:
+  gres-birthday:
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8081:8081
+    env_file:
+      - 'birthday.env'
+    networks:
+      - local_net
+  db:
+    image: mysql:5.7
+    platform: linux/x86_64
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'secret'
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    networks:
+      - local_net
+volumes:
+  db_data:
+    driver: local
+networks:
+  local_net:

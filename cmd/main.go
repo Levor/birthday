@@ -4,6 +4,7 @@ import (
 	"github.com/Levor/birthday/internal/config"
 	"github.com/Levor/birthday/internal/di"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -15,10 +16,10 @@ func main() {
 	) {
 		err := api.Run(":" + config.ServerPort)
 		if err != nil {
-			panic(err)
+			log.Panic(err)
 		}
 	})
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 }

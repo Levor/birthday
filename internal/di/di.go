@@ -6,6 +6,8 @@ import (
 	"github.com/Levor/birthday/internal/db/repositories"
 	"github.com/Levor/birthday/internal/http/handlers"
 	"github.com/Levor/birthday/internal/http/routes"
+	"github.com/Levor/birthday/internal/services"
+	"github.com/Levor/birthday/internal/utils"
 	"go.uber.org/dig"
 	"log"
 )
@@ -18,10 +20,13 @@ func init() {
 		config.Read,
 		routes.API,
 		repositories.NewWorkersRepository,
+		repositories.NewUserRepository,
+		utils.NewJWT,
 	}
 
 	providers = append(providers, db.Providers()...)
 	providers = append(providers, handlers.HandlerProviders()...)
+	providers = append(providers, services.ServiceProviders()...)
 
 	for _, provider := range providers {
 		err := Container.Provide(provider)

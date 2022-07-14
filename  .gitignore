@@ -3,3 +3,6 @@
 out
 /.idea/
 build/listener
+*.env
+*.pem
+*.pub
